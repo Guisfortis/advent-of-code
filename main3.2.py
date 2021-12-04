@@ -57,3 +57,4 @@ def make_c02_scrubber_rating(new_list, number):
 
 
 print(int(make_oxygen_generator_rating(make_binary_list(), 0), base=2) * int(make_c02_scrubber_rating(make_binary_list(), 0), base=2))
+print('hello, Albert')
