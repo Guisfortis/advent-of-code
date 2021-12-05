@@ -1,0 +1,53 @@
+def read_file() -> (list, list):
+    with open('D:\matrix.txt') as file:
+        keys = file.readline().strip().split(',')
+        list_of_matrix = [line.rstrip('\n').split() for line in file if line != '\n']
+    return keys, list_of_matrix
+
+
+numbers, matrix = read_file()
+
+
+def make_tuple_of_matrix() -> tuple:
+    list_of_matrix = []
+    for i in range(0, len(matrix), 5):
+        list_of_matrix.append(matrix[i: i + 5])
+    return tuple(list_of_matrix)
+
+
+def show_the_winning_card() -> (list, str):
+    tuple_of_matrix = make_tuple_of_matrix()
+    for key in numbers:
+        for one_matrix in tuple_of_matrix:
+            for line in one_matrix:
+                for index in range(len(line)):
+                    if line[index] == key:
+                        line[index] = '*'
+                if line == list('*' * 5) or check(tuple_of_matrix):
+                    return one_matrix, key
+
+
+def check(winning_card) -> bool:
+    count = 0
+    for z in winning_card:
+        for line in range(5):
+            for column in range(5):
+                if z[column][line] == '*':
+                    count += 1
+            if count == 5:
+                return True
+            count = 0
+    return False
+
+
+def show_the_result() -> int:
+    score = 0
+    winning_card, last_number = show_the_winning_card()
+    for i in winning_card:
+        for j in i:
+            if j.isdigit():
+                score += int(j)
+    return score * int(last_number)
+
+
+print(show_the_result())
